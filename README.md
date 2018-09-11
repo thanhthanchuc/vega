@@ -1,0 +1,1 @@
+Vega - Real-World Application with Asp.NET Core and Angular 2+
