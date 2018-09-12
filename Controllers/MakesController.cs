@@ -13,10 +13,10 @@ namespace vega.Controllers
 
         public MakesController(VegaDbContext context)
         {
-            _context = new VegaDbContext();
+            _context = context;
         }
 
-        [HttpGet("/apt/makes")]
+        [HttpGet("/api/makes")]
         public async Task<IEnumerable<Make>> GetMakes()
         {
             return await _context.Makes.Include(c => c.Models).ToListAsync();
