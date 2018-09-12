@@ -10,5 +10,9 @@ namespace vega.Persistance
         {
             
         }
+
+        public VegaDbContext()
+        {
+        }
     }
 }
