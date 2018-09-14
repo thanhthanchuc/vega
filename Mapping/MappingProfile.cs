@@ -10,6 +10,7 @@ namespace vega.Mapping
         {
             CreateMap<Make, MakesResources>();
             CreateMap<Model, ModelsResources>();
+            CreateMap<Feature, FeatureResources>();
         }
     }
 }
