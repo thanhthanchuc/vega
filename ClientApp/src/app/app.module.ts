@@ -27,6 +27,7 @@ import { HttpModule } from '@angular/http';
     HttpClientModule,
     FormsModule,
     HttpModule,
+    FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
