@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using vega.Controllers.Resources;
 using vega.Models;
 using vega.Persistance;
@@ -30,6 +31,28 @@ namespace vega.Controllers
             context.Vehicles.Add(vehicle);
             await context.SaveChangesAsync();
 
+            var result = mapper.Map<Vehicle, VehiclesResources>(vehicle);
+            return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] VehiclesResources vehicleResources)
+        {
+            //Validate
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            //Seach vehicle in Db
+            var vehicle = await context.Vehicles.Include(v => v.Features).SingleOrDefaultAsync(v => v.Id == id);
+
+            //Mapp VehiclesResources to Vehicle
+            mapper.Map<VehiclesResources, Vehicle>(vehicleResources, vehicle);
+            vehicle.LastUpdate = DateTime.Now;
+
+            //Save Data
+            await context.SaveChangesAsync();
+
+            //Map for get value to Test from Postman.
             var result = mapper.Map<Vehicle, VehiclesResources>(vehicle);
             return Ok(result);
         }
