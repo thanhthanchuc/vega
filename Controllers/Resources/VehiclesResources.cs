@@ -1,17 +1,18 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace vega.Controllers.Resources
 {
     public class VehiclesResources
     {
         public int Id { get; set; }
-        public int ModelId { get; set; }
+        public ModelsResources Model { get; set; }
         public bool IsRegistered { get; set; }
-        [Required]
+        public MakesResources Makes { get; set; }
         public ContactsResources Contact { get; set; }
-        public ICollection<int> Features { get; set; }
-        public VehiclesResources() => Features = new Collection<int>();
+        public DateTime LastUpdate { get; set; }
+        public ICollection<FeatureResources> Features { get; set; }
+        public VehiclesResources() => Features = new Collection<FeatureResources>();
     }
 }

@@ -20,23 +20,23 @@ namespace vega.Controllers
             this.mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateVehicle([FromBody] VehiclesResources vehicleResources)
+        public async Task<IActionResult> CreateVehicle([FromBody] SaveVehiclesResources vehicleResources)
         {
             //Validate
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var vehicle = mapper.Map<VehiclesResources, Vehicle>(vehicleResources);
+            var vehicle = mapper.Map<SaveVehiclesResources, Vehicle>(vehicleResources);
             vehicle.LastUpdate = DateTime.Now;
             context.Vehicles.Add(vehicle);
             await context.SaveChangesAsync();
 
-            var result = mapper.Map<Vehicle, VehiclesResources>(vehicle);
+            var result = mapper.Map<Vehicle, SaveVehiclesResources>(vehicle);
             return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] VehiclesResources vehicleResources)
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehiclesResources vehicleResources)
         {
             //Validate
             if (!ModelState.IsValid)
@@ -48,14 +48,14 @@ namespace vega.Controllers
             if (vehicle == null)
                 return NotFound(id);
             //Mapp VehiclesResources to Vehicle
-            mapper.Map<VehiclesResources, Vehicle>(vehicleResources, vehicle);
+            mapper.Map<SaveVehiclesResources, Vehicle>(vehicleResources, vehicle);
             vehicle.LastUpdate = DateTime.Now;
 
             //Save Data
             await context.SaveChangesAsync();
 
             //Map for get value to Test from Postman.
-            var result = mapper.Map<Vehicle, VehiclesResources>(vehicle);
+            var result = mapper.Map<Vehicle, SaveVehiclesResources>(vehicle);
             return Ok(result);
         }
         [HttpDelete("{id}")]
@@ -75,7 +75,12 @@ namespace vega.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVehicle(int id)
         {
-            var vehicle = await context.Vehicles.Include(v => v.Features).SingleOrDefaultAsync(v => v.Id == id);
+            var vehicle = await context.Vehicles
+                .Include(v => v.Features)
+                .ThenInclude(vf => vf.Feature)
+                .Include(v => v.Model)
+                .ThenInclude(vf => vf.Make)
+                .SingleOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
                 return NotFound(id);
