@@ -35,6 +35,7 @@ import { HttpModule } from '@angular/http';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'vehicles/new', component: VehicleFormComponent },
+      { path: 'vehicles/:id', component: VehicleFormComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
