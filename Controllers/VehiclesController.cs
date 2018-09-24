@@ -14,8 +14,8 @@ namespace vega.Controllers
     {
         private readonly IMapper mapper;
         private readonly IVehicleRepository repository;
-        private readonly UnitOfWork unitOfWork;
-        public VehiclesController(UnitOfWork unitOfWork, IMapper mapper, IVehicleRepository repository)
+        private readonly IUnitOfWork unitOfWork;
+        public VehiclesController(IUnitOfWork unitOfWork, IMapper mapper, IVehicleRepository repository)
         {
             this.unitOfWork = unitOfWork;
             this.repository = repository;
@@ -59,6 +59,8 @@ namespace vega.Controllers
 
             //Save Data
             await unitOfWork.CompleteAsync();
+
+            vehicle = await repository.GetVehicle(vehicle.Id);
 
             //Map for get value to Test from Postman.
             var result = mapper.Map<Vehicle, SaveVehiclesResources>(vehicle);
