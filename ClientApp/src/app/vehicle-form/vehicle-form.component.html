@@ -2,7 +2,7 @@
 <p>
     {{vehicle | json}}
 </p>
-<form>
+<form (ngSubmit)="submit()">
     <div class="form-group">
         <label for="" id="make">Make</label>
         <select id="make" class="form-control" (change)="changeMake()" [(ngModel)]="vehicle.makeId" name="makeId">
