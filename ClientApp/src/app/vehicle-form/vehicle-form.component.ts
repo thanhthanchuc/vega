@@ -66,6 +66,7 @@ export class VehicleFormComponent implements OnInit {
   }
 
   private setVehicle(v: Vehicle) {
+    this.vehicle.id = v.id;
     this.vehicle.makeId = v.makes.id;
     this.vehicle.modelId = v.model.id;
     this.vehicle.isRegistered = v.isRegistered;
@@ -92,6 +93,41 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-    this.vehicleService.create(this.vehicle).subscribe(x => console.log(x));
+    if (this.vehicle.id) {
+      this.vehicleService.update(this.vehicle).subscribe(x =>
+        this.toastyService.success({
+          title: "Success",
+          msg: "The vehicle was updated successfully!",
+          theme: "bootstrap",
+          showClose: true,
+          timeout: 5000
+        })
+      );
+    } else {
+      this.vehicleService.create(this.vehicle).subscribe(x =>
+        this.toastyService.success({
+          title: "Success",
+          msg: "The vehicle was created successfully!",
+          theme: "bootstrap",
+          showClose: true,
+          timeout: 5000
+        })
+      );
+    }
+  }
+
+  delete() {
+    if(confirm("Are you sure you want to delete this vehicle?"))
+      this.vehicleService.delete(this.vehicle.id)
+        .subscribe(x => {
+          this.toastyService.success({
+            title: "Success",
+            msg: "Deleted successfully!",
+            theme: 'bootstrap',
+            showClose: true,
+            timeout: 2000
+          });
+          this.router.navigate(['/']);
+        })
   }
 }
