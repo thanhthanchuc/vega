@@ -104,7 +104,14 @@ export class VehicleFormComponent implements OnInit {
         })
       );
     } else {
-      this.vehicleService.create(this.vehicle).subscribe(x =>
+      let vehicleForCreate = {
+        modelId: this.vehicle.modelId,
+        makeId: this.vehicle.makeId,
+        isRegistered: this.vehicle.isRegistered,
+        features: this.vehicle.features,
+        contact: this.vehicle.contact
+      };
+      this.vehicleService.create(vehicleForCreate).subscribe(x =>
         this.toastyService.success({
           title: "Success",
           msg: "The vehicle was created successfully!",
@@ -113,6 +120,7 @@ export class VehicleFormComponent implements OnInit {
           timeout: 5000
         })
       );
+      this.router.navigate(["/"]);
     }
   }
 
