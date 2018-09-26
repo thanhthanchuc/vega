@@ -42,8 +42,6 @@ export class VehicleFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.vehicle.id)
-      this.vehicleService.getVehicle(this.vehicle.id).subscribe(v => console.log(v))
     var sources = [
       this.vehicleService.getMakes(),
       this.vehicleService.getFeatures()
@@ -58,6 +56,7 @@ export class VehicleFormComponent implements OnInit {
 
         if (this.vehicle.id) {
           this.setVehicle(data[2]);
+          this.populateMake();
         }
       },
       err => {
@@ -75,9 +74,13 @@ export class VehicleFormComponent implements OnInit {
   }
 
   changeMake() {
+    this.populateMake();
+    delete this.vehicle.modelId;
+  }
+
+  private populateMake() {
     var make = this.makes.find(m => m.id == this.vehicle.makeId);
     this.models = make ? make.models : [];
-    delete this.vehicle.modelId;
   }
 
   onFeatureToggle(featureId, $event) {
