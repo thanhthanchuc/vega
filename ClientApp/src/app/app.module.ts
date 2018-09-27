@@ -1,3 +1,4 @@
+import { VehiclesListComponent } from './vehicles-list/vihicles-list.component';
 import { AppErrorHandler } from './app.error-handler';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -22,7 +23,8 @@ import { HttpModule } from '@angular/http';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    VehicleFormComponent
+    VehicleFormComponent,
+    VehiclesListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,9 +34,10 @@ import { HttpModule } from '@angular/http';
     HttpModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '' ,component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'vehicles/new', component: VehicleFormComponent },
+      { path: 'vehicles', component: VehiclesListComponent },
       { path: 'vehicles/:id', component: VehicleFormComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])
