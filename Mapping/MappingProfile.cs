@@ -24,6 +24,8 @@ namespace vega.Mapping
                 .ForMember(vr => vr.Makes, opt => opt.MapFrom(v => v.Model.Make));
 
             //Push data from resources to server, we need mapping API to Domain
+            CreateMap<FilterResources, Filter>();
+            
             CreateMap<SaveVehiclesResources, Vehicle>()
                 .ForMember(vehicle => vehicle.Id, opt => opt.Ignore())
                 .ForMember(vehicle => vehicle.ContactEmail, opt => opt.MapFrom(vehicleResources => vehicleResources.Contact.Email))
