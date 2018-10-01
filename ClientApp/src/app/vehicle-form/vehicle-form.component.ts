@@ -94,16 +94,9 @@ export class VehicleFormComponent implements OnInit {
 
   submit() {
     if (this.vehicle.id) {
-      this.vehicleService.update(this.vehicle).subscribe(x => {
-        this.toastyService.success({
-          title: "Success",
-          msg: "The vehicle was updated successfully!",
-          theme: "bootstrap",
-          showClose: true,
-          timeout: 5000
-        })
-        this.router.navigate(['/vehicles']);
-      });
+      this.vehicleService.update(this.vehicle).subscribe(x =>
+        this.toastySuccess("The vehicle was updated successfully!", 5000));
+      this.router.navigate(['/vehicles']);
     } else {
       let vehicleForCreate = {
         modelId: this.vehicle.modelId,
@@ -113,14 +106,7 @@ export class VehicleFormComponent implements OnInit {
         contact: this.vehicle.contact
       };
       this.vehicleService.create(vehicleForCreate).subscribe(x =>
-        this.toastyService.success({
-          title: "Success",
-          msg: "The vehicle was created successfully!",
-          theme: "bootstrap",
-          showClose: true,
-          timeout: 5000
-        })
-      );
+        this.toastySuccess("The vehicle was created successfully!", 5000));
       this.router.navigate(["/"]);
     }
   }
@@ -129,14 +115,18 @@ export class VehicleFormComponent implements OnInit {
     if(confirm("Are you sure you want to delete this vehicle?"))
       this.vehicleService.delete(this.vehicle.id)
         .subscribe(x => {
-          this.toastyService.success({
-            title: "Success",
-            msg: "Deleted successfully!",
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 2000
-          });
+          this.toastySuccess("Deleted successfully", 2000);
           this.router.navigate(['/']);
         })
+  }
+
+  private toastySuccess(msg: string, timeout: number) {
+    this.toastyService.success({
+      title: 'Success',
+      msg: msg,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: timeout
+    })
   }
 }
