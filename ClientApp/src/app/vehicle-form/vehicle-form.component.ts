@@ -94,7 +94,7 @@ export class VehicleFormComponent implements OnInit {
 
   submit() {
     if (this.vehicle.id) {
-      this.vehicleService.update(this.vehicle).subscribe(x =>
+      this.vehicleService.update(this.vehicle).subscribe(x => {
         this.toastyService.success({
           title: "Success",
           msg: "The vehicle was updated successfully!",
@@ -102,7 +102,8 @@ export class VehicleFormComponent implements OnInit {
           showClose: true,
           timeout: 5000
         })
-      );
+        this.router.navigate(['/vehicles']);
+      });
     } else {
       let vehicleForCreate = {
         modelId: this.vehicle.modelId,
