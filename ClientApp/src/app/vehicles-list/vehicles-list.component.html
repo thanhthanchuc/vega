@@ -7,7 +7,7 @@
             <option *ngFor="let m of makes" value="{{m.id}}">{{m.name}}</option>
         </select>
     </div>
-    <button class="btn btn-default" (click)="resetFilter()">Reset Filter</button>    
+    <button class="btn btn-default" (click)="resetFilter()">Reset Filter</button>
 </div>
 
 
@@ -16,9 +16,10 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Contact Name</th>
+            <th (click)="sortBy('make')">Make<i *ngIf="filter.sortBy === 'make'" class="fa" [class.fa-sort-asc]="filter.isSortAscending"
+                    [class.fa-sort-desc]="!filter.isSortAscending"></i></th>
+            <th (click)="sortBy('model')">Model</th>
+            <th (click)="sortBy('contactName')">Contact Name</th>
             <th>View</th>
         </tr>
     </thead>
