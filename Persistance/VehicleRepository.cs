@@ -61,6 +61,9 @@ namespace vega.Persistance
 
             query = query.ApplyOrdering(queryObj, columnsMap);
 
+            //Implement Paging
+            query = query.ApplyPaging(queryObj);
+
             return await query.ToListAsync();
         }
 
