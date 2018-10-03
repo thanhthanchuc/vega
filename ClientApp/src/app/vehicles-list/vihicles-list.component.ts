@@ -12,7 +12,9 @@ import { VehicleService } from '../../services/vehicle.service';
 export class VehiclesListComponent implements OnInit {
     vehicles: Vehicle[];
     makes: KeyValuePair[];
-    filter: any = {};
+    filter: any = {
+        pageSize: 3
+    };
     columns = [
         { title: "Id",},
         { title: "Contact Name", key: 'contactName', isSortable: true},
@@ -54,6 +56,11 @@ export class VehiclesListComponent implements OnInit {
             this.filter.isSortAscending = true;
             console.log(this.filter.isSortAscending);
         }
+        this.populateVehicles();
+    }
+
+    onPageChange(page) {
+        this.filter.page = page;
         this.populateVehicles();
     }
 }
