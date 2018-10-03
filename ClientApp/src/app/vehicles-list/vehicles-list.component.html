@@ -15,12 +15,17 @@
 <table class="table table-bordered table-hover table-responsive">
     <thead>
         <tr>
-            <th>Id</th>
-            <th (click)="sortBy('make')">Make<i *ngIf="filter.sortBy === 'make'" class="fa" [class.fa-sort-asc]="filter.isSortAscending"
-                    [class.fa-sort-desc]="!filter.isSortAscending"></i></th>
-            <th (click)="sortBy('model')">Model</th>
-            <th (click)="sortBy('contactName')">Contact Name</th>
-            <th>View</th>
+            <th *ngFor="let c of columns">
+                <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
+                    {{c.title}}
+                    <i *ngIf="filter.sortBy === c.key" class="fa" [class.fa-sort-asc]="filter.isSortAscending"
+                        [class.fa-sort-desc]="!filter.isSortAscending">
+                    </i>
+                </div>
+                <div *ngIf="!c.isSortable">
+                    {{c.title}}
+                </div>
+            </th>
         </tr>
     </thead>
     <tbody *ngFor="let vehicle of vehicles">
