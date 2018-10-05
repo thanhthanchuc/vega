@@ -10,10 +10,11 @@ import { VehicleService } from '../../services/vehicle.service';
 })
 
 export class VehiclesListComponent implements OnInit {
+    private readonly PAGE_SIZE = 3;
     queryResult: any = {};
     makes: KeyValuePair[];
     filter: any = {
-        pageSize: 3
+        pageSize: this.PAGE_SIZE
     };
     columns = [
         { title: "Id",},
@@ -39,12 +40,16 @@ export class VehiclesListComponent implements OnInit {
     }
 
     onFilterChange() {
+        this.queryResult.page = 1;
         this.populateVehicles();
     }
 
     resetFilter() {
-        this.filter = {};
-        this.onFilterChange();
+        this.filter = {
+            page: 1,
+            pageSize: this.PAGE_SIZE
+        };
+        this.populateVehicles();
     }
 
     sortBy(columnName: string) {
