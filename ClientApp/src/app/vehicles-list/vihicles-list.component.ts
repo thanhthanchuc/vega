@@ -10,7 +10,7 @@ import { VehicleService } from '../../services/vehicle.service';
 })
 
 export class VehiclesListComponent implements OnInit {
-    vehicles: Vehicle[];
+    queryResult: any = {};
     makes: KeyValuePair[];
     filter: any = {
         pageSize: 3
@@ -35,7 +35,7 @@ export class VehiclesListComponent implements OnInit {
 
     private populateVehicles() {
         this.vehicleService.getAllVehicles(this.filter)
-            .subscribe(x => this.vehicles = x);
+            .subscribe(result => this.queryResult = result);
     }
 
     onFilterChange() {

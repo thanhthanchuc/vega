@@ -10,6 +10,6 @@ namespace vega.Persistance
          void Add(Vehicle vehicle);
          void Remove(Vehicle vehicle);
 
-         Task<IEnumerable<Vehicle>> GetAllVehicles(VehicleQuery filter);
+         Task<QueryResult<Vehicle>> GetAllVehicles(VehicleQuery filter);
     }
 }

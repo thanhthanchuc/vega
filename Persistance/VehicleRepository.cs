@@ -40,8 +40,10 @@ namespace vega.Persistance
             context.Vehicles.Remove(vehicle);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetAllVehicles(VehicleQuery queryObj)
+        public async Task<QueryResult<Vehicle>> GetAllVehicles(VehicleQuery queryObj)
         {
+            var result = new QueryResult<Vehicle>();
+
             var query = context.Vehicles
                 .Include(v => v.Model)
                     .ThenInclude(m => m.Make)
@@ -61,10 +63,14 @@ namespace vega.Persistance
 
             query = query.ApplyOrdering(queryObj, columnsMap);
 
+            result.TotalItems = await query.CountAsync();
+
             //Implement Paging
             query = query.ApplyPaging(queryObj);
 
-            return await query.ToListAsync();
+            result.Items =  await query.ToListAsync();
+
+            return result;
         }
 
 
