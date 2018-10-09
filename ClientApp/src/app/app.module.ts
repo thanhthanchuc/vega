@@ -1,3 +1,4 @@
+import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
 import { VehiclesListComponent } from './vehicles-list/vihicles-list.component';
 import { AppErrorHandler } from './app.error-handler';
 import { BrowserModule } from '@angular/platform-browser';
@@ -26,7 +27,8 @@ import { PaginationComponent } from './shared/pagination.component';
     FetchDataComponent,
     VehicleFormComponent,
     VehiclesListComponent,
-    PaginationComponent
+    PaginationComponent,
+    ViewVehicleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,8 +42,9 @@ import { PaginationComponent } from './shared/pagination.component';
       { path: 'counter', component: CounterComponent },
       { path: 'vehicles/new', component: VehicleFormComponent },
       { path: 'vehicles', component: VehiclesListComponent },
-      { path: 'vehicles/:id', component: VehicleFormComponent },
+      { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'vehicles/edit/:id', component: VehicleFormComponent },
     ])
   ],
   providers: [

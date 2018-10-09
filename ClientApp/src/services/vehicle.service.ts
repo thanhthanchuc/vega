@@ -1,3 +1,4 @@
+import { ToastyService } from 'ng2-toasty';
 import { Http } from "@angular/http";
 import { Injectable } from "@angular/core";
 import "rxjs/add/operator/map";
@@ -7,7 +8,7 @@ import { SaveVehicle } from "../app/models/vehicle";
 export class VehicleService {
   private readonly vehiclesEndPoint = "/api/vehicles";
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private toastyService: ToastyService) {}
 
   getMakes() {
     return this.http.get("/api/makes").map(res => res.json());
@@ -46,5 +47,15 @@ export class VehicleService {
     }
 
     return parts.join("&");
+  }
+
+  toastySuccess(msg: string, timeout: number) {
+    this.toastyService.success({
+      title: 'Success',
+      msg: msg,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: timeout
+    })
   }
 }
