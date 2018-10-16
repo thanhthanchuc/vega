@@ -29,15 +29,15 @@ namespace vega.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload(int vehicleId, IFormFile file)
         {
-            var vehicle = await repository.GetVehicle(vehicleId, false);
+            var vehicle = await repository.GetVehicle(vehicleId, includeReleased: false);
             if (vehicle == null)
                 return NotFound();
 
-            var uploadsFolderPath = Path.Combine(host.WebRootPath, "Uploads");
+            var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
             if (!Directory.Exists(uploadsFolderPath))
                 Directory.CreateDirectory(uploadsFolderPath);
 
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var fileName = Path.GetFileName(file.FileName) + Path.GetExtension(file.FileName);
 
             var filePath = Path.Combine(uploadsFolderPath, fileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
